@@ -32,14 +32,14 @@ class LogParser
       if kill?(line)
         @total_kills += 1
 
-        kill_data(line, @match_world_kills, @match_kills, @match_death_causes)
+        kill_data(line)
       end
 
       @players.append(line.match(PLAYER_PATTERN)[1]) if user_info?(line)
 
       next unless ended_game?(line)
 
-      match_data(@total_kills, @match_kills, @match_world_kills, @match_death_causes)
+      match_data
       reset_match
       @match_counter += 1
     end
@@ -78,14 +78,14 @@ class LogParser
     line.match(DEATH_CAUSE_PATTERN)[1]
   end
 
-  def kill_data(line, match_world_kills, match_kills, match_death_causes)
+  def kill_data(line)
     if world_player?(line)
-      match_world_kills.append(world_killer(line))
+      @match_world_kills.append(world_killer(line))
     else
-      match_kills.append(killer(line))
+      @match_kills.append(killer(line))
     end
 
-    match_death_causes.append(death_cause(line))
+    @match_death_causes.append(death_cause(line))
   end
 
   def user_info?(line)
@@ -96,14 +96,14 @@ class LogParser
     line.include?(END_GAME)
   end
 
-  def match_data(total_kills, match_kills, match_world_kills, match_death_causes)
+  def match_data
     match_name = "game-#{@match_counter}"
 
     @matches[match_name] = {
-      'total_kills': total_kills,
+      'total_kills': @total_kills,
       'players': @players.uniq,
-      'kills': kills_data(match_kills.tally, match_world_kills.tally),
-      'kills_by_means': match_death_causes.tally
+      'kills': kills_data(@match_kills.tally, @match_world_kills.tally),
+      'kills_by_means': @match_death_causes.tally
     }
   end
 
