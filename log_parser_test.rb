@@ -28,7 +28,7 @@ RSpec.describe 'LogParser' do
       'game-1' => {
         total_kills: 15,
         players: ['Isgalamido', 'Dono da Bola', 'Mocinha', 'Zeh'],
-        kills: { 'Isgalamido' => -8, 'Zeh' => -2, 'Dono' => -1 },
+        kills: { 'Isgalamido' => -8, 'Zeh' => -2, 'Dono da Bola' => -1 },
         kills_by_means: { 'MOD_TRIGGER_HURT' => 9, 'MOD_ROCKET_SPLASH' => 3, 'MOD_FALLING' => 2,
                           'MOD_ROCKET' => 1 }
       }
@@ -38,7 +38,7 @@ RSpec.describe 'LogParser' do
   def ranking_result
     {
       ranking: {
-        'Mocinha' => 0, 'Dono da Bola' => 0, 'Dono' => -1, 'Zeh' => -2, 'Isgalamido' => -8
+        'Mocinha' => 0, 'Dono da Bola' => -1, 'Zeh' => -2, 'Isgalamido' => -8
       }
     }
   end

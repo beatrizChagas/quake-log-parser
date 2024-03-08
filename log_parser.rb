@@ -7,7 +7,7 @@ class LogParser
   KILL = 'Kill'
   WORLD_PLAYER = '<world>'
   CLIENTUSERINFO = 'ClientUserinfoChanged'
-  WORLD_KILLER_PATTERN = /#{Regexp.escape('killed')}\s*(\w+)/
+  WORLD_KILLER_PATTERN = /killed\s+(.*?)\s+by/
   KILLER_PATTERN = /(?<= )([^ ]+)(?= killed)/
   DEATH_CAUSE_PATTERN = /#{Regexp.escape('by')}\s*(\w+)/
   PLAYER_PATTERN = /n\\(.*?)\\t/
